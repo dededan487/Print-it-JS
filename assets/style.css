@@ -259,7 +259,7 @@ header {
 }
 
 .dot_selected {
-	background-color: #dd1818;
+	background-color: hsl(0, 0%, 1%);
 }
 
 /* Fin du code CSS pour le carousel */

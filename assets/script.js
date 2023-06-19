@@ -26,27 +26,29 @@ console.log(arrow_left, arrow_right); // Appeler les fleches dans le DOM
 arrow_left.addEventListener("click", () => {
 	console.log("Flèche gauche cliquée"); // evenement au click GH
 
-	displaySlide(index); // Appel initial de la fonction avec l'index actuel
 	index--; // Incrémentation de l'index pour la prochaine image
 
 	if (index < 0) {
-		index = slides.length - 1;
+		index = slides.length - 1; // Si l'index devient négatif, revenir à la dernière diapositive
 	}
+
+	displaySlide(index); // Appel initial de la fonction avec l'index actuel
+	updateDotSelection(index);
 });
 
 arrow_right.addEventListener("click", () => {
 	console.log("Flèche droite cliquée"); // evenement au click DT
-	displaySlide(index); // Appel initial de la fonction avec l'index actuel
+
 	index++; // Incrémentation de l'index pour la prochaine image
 
 	if (index >= slides.length) {
 		index = 0; // Réinitialisation de l'index à 0 pour revenir à la première image
 	}
+	displaySlide(index); // Appel initial de la fonction avec l'index actuel
+	updateDotSelection(index);
 
 });
 
-// Appel initial de displaySlide avec l'index 0
-displaySlide(0);
 let dots = document.querySelector(".dots"); // Sélectionnez le conteneur des points
 
 for (let i = 0; i < slides.length; i++) {
@@ -58,19 +60,34 @@ for (let i = 0; i < slides.length; i++) {
 }
 
 let index = 0;
+displaySlide(0); // Appel initial de displaySlide avec l'index 0
+updateDotSelection(index); // Mettre à jour la sélection du premier point
+
 function displaySlide(index) {
 	const slide = slides[index];
 	const image = slide.image;
+	const tagLine = slide.tagLine;
+
 	const slideImage = document.getElementById("slideImage");
+	const slideTagLine = document.getElementById("slideTagLine");
 
 	// Mettre à jour la source de l'image avec l'image correspondante
 	slideImage.src = image;
+	// Afficher la légende associée à l'image
+	slideTagLine.innerHTML = tagLine;
 
-	// Afficher l'image dans le DOM (par exemple, en utilisant un élément <img>)
-	// Remplacez la ligne ci-dessous par le code approprié pour afficher l'image
+	// Afficher l'image dans le DOM 
 	console.log("Affichage de l'image :", image);
-
 }
+
+function updateDotSelection(index) {
+	 allDot = document.querySelectorAll(".dot");
+	allDot.forEach(function(point){
+		point.classList.remove("dot_selected");
+	});
+	allDot[index].classList.add("dot_selected");
+}
+
 console.log("Element dot:", dots);
 
 
