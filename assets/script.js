@@ -19,76 +19,89 @@ const slides = [
 	}
 ]
 
-const arrow_left = document.querySelector(".arrow_left");
+
+const arrow_left = document.querySelector(".arrow_left"); // declarations des fleches dans le DOM
 const arrow_right = document.querySelector(".arrow_right ");
-console.log(arrow_left, arrow_right); // Appeler les fleches dans le DOM
+let index = 0;  //Cette variable est initialisée à 0, la première image du diaporama.
 
-arrow_left.addEventListener("click", () => {
-	console.log("Flèche gauche cliquée"); // evenement au click GH
+function leftClick() {
+	console.log("Flèche gauche cliquée");
 
-	index--; // Incrémentation de l'index pour la prochaine image
-
+	index = index - 1; // click gauche on retire 1 de l'index pour revenir en arriere
 	if (index < 0) {
 		index = slides.length - 1; // Si l'index devient négatif, revenir à la dernière diapositive
 	}
-
 	displaySlide(index); // Appel initial de la fonction avec l'index actuel
-	updateDotSelection(index);
-});
+	updateDotSelection(index); //Appel de la fonction pour selectionner le point associer à l'image et changer sa classe
+};
+arrow_left.addEventListener("click", leftClick); // Ajout  événements de clic à la flèches gauche
 
-arrow_right.addEventListener("click", () => {
-	console.log("Flèche droite cliquée"); // evenement au click DT
+function rightClick() {
+	console.log("Flèche droite cliquée");
 
 	index++; // Incrémentation de l'index pour la prochaine image
-
 	if (index >= slides.length) {
 		index = 0; // Réinitialisation de l'index à 0 pour revenir à la première image
 	}
 	displaySlide(index); // Appel initial de la fonction avec l'index actuel
-	updateDotSelection(index);
+	updateDotSelection(index); // Appel de la fonction pour selectionner le point associer à l'image et changer sa classe
+}
+arrow_right.addEventListener("click", rightClick); // Ajout  événements de clic à la flèches droite
 
-});
-
-let dots = document.querySelector(".dots"); // Sélectionnez le conteneur des points
-
-for (let i = 0; i < slides.length; i++) {
-	let dot = document.createElement("p"); // Créez un nouvel élément p pour représenter le point
-	dot.classList.add("dot"); // Ajoutez la classe CSS "dot" à l'élément dot
-	dot.setAttribute("data-index", i); // Ajouter l'attribut data-index avec la valeur de l'index
-	dots.appendChild(dot); // Ajoutez l'élément dot au conteneur des points
-
+// fonction initialisation des bullet point et association avec les images
+function dotInit() {
+	const dots = document.querySelector(".dots"); // Sélectionnez le conteneur des points dans const locale
+	
+	// boucle pour associer tous les elements aux images
+	for (let i = 0; i < slides.length; i++) {
+		let dot = document.createElement("p"); // Créez un nouvel élément p pour représenter le point
+		dot.classList.add("dot"); // Ajout de  la classe CSS "dot" à l'élément dot pour afficher sur banner
+		dot.setAttribute("data-index", i); // Ajout de l'attribut data-index avec la valeur de l'index
+		dots.appendChild(dot); // Ajout de l'élément dot au conteneur des points
+	}
 }
 
-let index = 0;
-displaySlide(0); // Appel initial de displaySlide avec l'index 0
-updateDotSelection(index); // Mettre à jour la sélection du premier point
-
-function displaySlide(index) {
+function displaySlide() {
+	// Récupérer la diapositive correspondant à l'index actuel
 	const slide = slides[index];
+
+	// Extraire l'image et la légende de la diapositive
 	const image = slide.image;
 	const tagLine = slide.tagLine;
 
+	// Sélectionner l'élément de l'image et de la légende dans le DOM
 	const slideImage = document.getElementById("slideImage");
 	const slideTagLine = document.getElementById("slideTagLine");
 
 	// Mettre à jour la source de l'image avec l'image correspondante
-	slideImage.src = image;
-	// Afficher la légende associée à l'image
-	slideTagLine.innerHTML = tagLine;
+	slideImage.src = image; 
 
-	// Afficher l'image dans le DOM 
-	console.log("Affichage de l'image :", image);
+	// Afficher la légende associée à l'image
+	slideTagLine.innerHTML = tagLine; 
+
+	// Afficher l'image dans le DOM
+	console.log("Affichage de l'image :", image);  
 }
 
-function updateDotSelection(index) {
-	 allDot = document.querySelectorAll(".dot");
-	allDot.forEach(function(point){
+function updateDotSelection() {
+	// Sélectionner tous les éléments dot
+	let allDot = document.querySelectorAll(".dot"); 
+
+	// Parcourir chaque élément dot
+	allDot.forEach((point)=> {
+		// Supprimer la classe dot_selected pour tous les éléments
 		point.classList.remove("dot_selected");
 	});
+
+	// Ajouter la classe dot_selected à l'élément dot correspondant à l'index actuel
 	allDot[index].classList.add("dot_selected");
 }
 
-console.log("Element dot:", dots);
+dotInit() // Appel pour la mise en place des points
+displaySlide(); // Appel initial de displaySlide avec l'index 0
+updateDotSelection(); // Mettre à jour la sélection du premier point
+
+
 
 
 
