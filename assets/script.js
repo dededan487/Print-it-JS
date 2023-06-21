@@ -107,4 +107,3 @@ updateDotSelection(); // Mettre à jour la sélection du premier point
 
 
 
-
