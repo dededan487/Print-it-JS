@@ -29,7 +29,7 @@ arrow_right.addEventListener("click", rightClick); // Ajout  événements de cli
 
 
 dotInit() // Appel pour la mise en place des points
-displaySlide(); // Appel initial de displaySlide avec l'index 0
+displaySlide(); // Appel initial avec l'index 0
 updateDotSelection(); // Mettre à jour la sélection du premier point
 
 /* 
